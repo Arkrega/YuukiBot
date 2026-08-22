@@ -28,7 +28,6 @@ Daftar lengkap semua command: ketik `!allmenu` di WhatsApp.
 
 Fitur otomatis bawaan:
 
-- **Auto-follow channel** — bot otomatis follow channel newsletter tertentu saat connect.
 - **Auto-JPM lanjut sendiri** setelah restart kalau sebelumnya aktif.
 - **Sambutan menu personal** — `!menu` menyapa pengirim (@mention di grup, tanpa tag di PM) lengkap dengan role (Owner/Premium/User).
 
