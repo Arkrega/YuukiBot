@@ -1,40 +1,136 @@
 # YuukiBot
 
+<!--
+  YuukiBot — Bot WhatsApp multi-fitur berbasis Go (whatsmeow).
+  Keyword: bot whatsapp, whatsapp bot, bot wa, whatsapp automation,
+  golang, go, whatsmeow, bot grup, bot ai, broadcast jpm, open source.
+-->
+
 <p align="center">
   <img src="banner.jpg" alt="YuukiBot Banner" width="100%">
 </p>
 
-Bot WhatsApp multi-fitur berbasis Go ([whatsmeow](https://github.com/tulir/whatsmeow)): pencarian media, konversi file, edit gambar/video, sticker AI, AI chat, broadcast JPM, tools, hingga panggilan audio/video dengan multi-sender. Dijalankan sebagai binary tunggal — semua aset (termasuk QRIS donasi) sudah ter-embed di dalamnya.
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.25+-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go 1.25+">
+  <img src="https://img.shields.io/badge/WhatsApp_Bot-Open_Source-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp Bot">
+  <img src="https://img.shields.io/badge/License-Open_Source-green?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/Platform-Linux-blue?style=for-the-badge&logo=linux&logoColor=white" alt="Platform">
+</p>
+
+**YuukiBot** adalah **bot WhatsApp multi-fitur** berbasis **Go** ([whatsmeow](https://github.com/tulir/whatsmeow)) yang **open source**. Bot WA ini mendukung pencarian media, konversi file, edit gambar/video, sticker AI, AI chat, broadcast JPM, tools, hingga panggilan audio/video dengan multi-sender. Dijalankan sebagai binary tunggal — semua aset (termasuk QRIS donasi) sudah ter-embed di dalamnya.
 
 > **Open source.** Source code tersedia di GitHub. Kalau kamu memakai / mengembangkan bot ini, mohon hormati pembuat: jangan hapus kredit developer, jangan klaim sebagai buatanmu, dan kalau mau mengembangkan silakan **fork** repository asli. Jangan lupa ⭐ **star** sebagai bentuk dukungan. 🙏
 
+## 🚀 Quick Start
+
+Cara paling cepat untuk menjalankan YuukiBot:
+
+```bash
+# 1. Clone & masuk folder
+git clone https://github.com/Riflxz/YuukiBot.git
+cd YuukiBot
+
+# 2. Build binary (pakai vendor, tanpa internet)
+go build -mod=vendor -o YuukiBot .
+
+# 3. Salin & sesuaikan konfigurasi (ganti nomor owner kamu)
+cp .env.example .env
+nano .env
+
+# 4. Jalankan, lalu scan QR di WhatsApp
+./YuukiBot
+```
+
+> Butuh langkah detail? Lihat [Instalasi dari Source](#instalasi-dari-source-open-source) dan [Konfigurasi (.env)](#konfigurasi-env).
+
+## Daftar Isi
+
+- [🚀 Quick Start](#quick-start)
+- [✨ Fitur Utama](#fitur-utama)
+- [⚙️ Requirements](#requirements)
+- [🚀 Instalasi dari Source](#instalasi-dari-source-open-source)
+- [🔧 Konfigurasi (.env)](#konfigurasi-env)
+- [▶️ Menjalankan](#menjalankan)
+- [📁 Struktur File](#struktur-file)
+- [🔄 Alur Kerja](#alur-kerja)
+- [❓ FAQ / Troubleshooting](#faq--troubleshooting)
+- [🤝 Kontributor](#kontributor)
+- [👨‍💻 Developer](#developer)
+- [💖 Donasi](#donasi)
+- [📄 Lisensi](#lisensi)
+
 ## Fitur Utama
 
-| Kategori | Contoh Command | Fungsi |
-|---|---|---|
-| Umum | `!menu`, `!ping`, `!info`, `!sticker`, `!donasi`, `!contributor`, `!afk` | Navigasi menu (4 versi tampilan), cek status, buat sticker, QRIS donasi, daftar kontributor, tandai sedang AFK (mention kamu akan diberi tahu) |
-| AI Chat | `!ai`, `yuuki <pertanyaan>` | AI chat Yuuki: `!ai on/off` (owner), semua user ngobrol via `yuuki`/`yuki`, session per user (`!ai list`/`load`/`new`) |
-| Search | `!yts`, `!wiki`, `!kbbi`, `!lyrics`, `!pinterest`, `!bingimage` | Cari video, artikel, definisi, lirik, gambar |
-| Tools | `!tr`, `!qr`, `!ss`, `!barcode`, `!tempmail`, `!whatmusic`, `!ipinfo` | Translate, QR/barcode, screenshot web, identifikasi lagu, lookup IP |
-| Image | `!hd`, `!hdvid`, `!removebg`, `!blur`, `!cap`, `!wanted` | Perjelas gambar/video, hapus background, efek gambar |
-| Konversi | `!tomp3`, `!toimg`, `!togif`, `!tourl`, `!tofile`, `!resend`, `!rvo` | Konversi media, upload ke URL, kirim ulang tanpa kompres |
-| Sticker | `!tenor`, `!sai`, `!brat` | Cari sticker, jadikan sticker AI, buat sticker brat |
-| Grup (moderasi) | `!jaga`, `!antilink`, `!antitoxic`, `!welcome`, `!setwelcome`, `!warn`, `!warnlist`, `!resetwarn` | Jaga grup: peringatkan link/kata kasar, sambut member baru (pesan custom), warn 3x = kick otomatis — config persist antar restart |
-| Grup (manajemen) | `!close`/`!open`, `!add`, `!kick`, `!promote`/`!demote`, `!tagall`, `!hidetag`, `!setname`, `!setdesc`, `!setppgc`, `!linkgc`, `!revoke`, `!infogc`, `!out` | Kelola grup: kunci/buka chat, tambah/kick member (multi), naik/turun admin, tag semua, ubah nama/deskripsi/foto, link undangan, info grup, bot keluar |
-| JPM Broadcast | `!jpm`, `!jpmht`, `!jpmch`, `!autojpm`, `!stopjpm`, `!bljpm` | Broadcast ke semua grup/saluran (owner): mode basic/hidetag/channel/update/auto, jeda antar grup, blacklist per fitur, auto-broadcast terjadwal |
-| Saluran | `!getidch`, `!upch`, `!kirim` | Ambil ID saluran dari link (semua user), posting & kirim konten saluran |
-| Alight Motion | `!am-send`, `!am-aktif`, `!amkey` | Aktivasi akun via magic link; key kedaluwarsa -> diarahkan beli (10k/bln), ganti key sendiri via `!amkey <apikey>` tanpa restart |
-| Fun | `!scanrepo`, `!githubstalk`, `!npmstalk`, `!tiktokstalk`, `!robloxstalk`, `!jodoh`, `!howgay` | Scan repo GitHub untuk security risk, stalk akun, cek kecocokan, dll |
-| Audio/Call | `!play`, `!skip`, `!stopcall`, `!antrian`, `!prank` | Streaming lagu/video ke panggilan (owner/premium) |
-| Sender | `!addsender`, `!ls` | Kelola akun penelpon tambahan (owner) |
-| Owner | `!bl`, `!clear`, `!self`, `!public`, `!setmenu`, `!ap`, `!dp`, `!uploadgh` | Blacklist, mode bot, manajemen akses |
+YuukiBot punya banyak fitur yang dikelompokkan per kategori. Berikut ringkasannya:
+
+### 💬 Umum & AI
+
+| Command | Fungsi |
+|---|---|
+| `!menu`, `!ping`, `!info`, `!sticker`, `!donasi`, `!contributor` | Navigasi menu (4 versi tampilan), cek status, buat sticker, QRIS donasi, daftar kontributor |
+| `!afk` | Tandai sedang AFK — siapa pun yang mention kamu akan diberi tahu |
+| `!ai`, `yuuki <pertanyaan>` | AI chat Yuuki: `!ai on/off` (owner), semua user ngobrol via `yuuki`/`yuki`, session per user (`!ai list`/`load`/`new`) |
+
+### 🔍 Search & Tools
+
+| Command | Fungsi |
+|---|---|
+| `!yts`, `!wiki`, `!kbbi`, `!lyrics`, `!pinterest`, `!bingimage` | Cari video, artikel, definisi, lirik, gambar |
+| `!tr`, `!qr`, `!ss`, `!barcode`, `!tempmail`, `!whatmusic`, `!ipinfo` | Translate, QR/barcode, screenshot web, identifikasi lagu, lookup IP |
+
+### 🖼️ Image, Konversi & Sticker
+
+| Command | Fungsi |
+|---|---|
+| `!hd`, `!hdvid`, `!removebg`, `!blur`, `!cap`, `!wanted` | Perjelas gambar/video, hapus background, efek gambar |
+| `!tomp3`, `!toimg`, `!togif`, `!tourl`, `!tofile`, `!resend`, `!rvo` | Konversi media, upload ke URL, kirim ulang tanpa kompres |
+| `!tenor`, `!sai`, `!brat` | Cari sticker, jadikan sticker AI, buat sticker brat |
+
+### 👥 Grup
+
+| Command | Fungsi |
+|---|---|
+| `!jaga`, `!antilink`, `!antitoxic`, `!welcome`, `!setwelcome`, `!warn`, `!warnlist`, `!resetwarn` | Moderasi: peringatkan link/kata kasar, sambut member baru (pesan custom), warn 3x = kick otomatis — config persist antar restart |
+| `!close`/`!open`, `!add`, `!kick`, `!promote`/`!demote`, `!tagall`, `!hidetag`, `!setname`, `!setdesc`, `!setppgc`, `!linkgc`, `!revoke`, `!infogc`, `!out` | Manajemen: kunci/buka chat, tambah/kick member (multi), naik/turun admin, tag semua, ubah nama/deskripsi/foto, link undangan, info grup, bot keluar |
+
+### 📢 Broadcast & Saluran
+
+| Command | Fungsi |
+|---|---|
+| `!jpm`, `!jpmht`, `!jpmch`, `!autojpm`, `!stopjpm`, `!bljpm` | Broadcast ke semua grup/saluran (owner): mode basic/hidetag/channel/update/auto, jeda antar grup, blacklist per fitur, auto-broadcast terjadwal |
+| `!getidch`, `!upch`, `!kirim` | Ambil ID saluran dari link (semua user), posting & kirim konten saluran |
+
+### 🎮 Fun & Stalker
+
+| Command | Fungsi |
+|---|---|
+| `!scanrepo`, `!githubstalk`, `!npmstalk`, `!tiktokstalk`, `!robloxstalk`, `!jodoh`, `!howgay` | Scan repo GitHub untuk security risk, stalk akun, cek kecocokan, dll |
+
+### 🎵 Audio/Call & Premium
+
+| Command | Fungsi |
+|---|---|
+| `!play`, `!skip`, `!stopcall`, `!antrian`, `!prank` | Streaming lagu/video ke panggilan (owner/premium) |
+| `!am-send`, `!am-aktif`, `!amkey` | Aktivasi akun Alight Motion via magic link; key kedaluwarsa -> diarahkan beli (10k/bln), ganti key sendiri via `!amkey <apikey>` tanpa restart |
+
+### ⚙️ Sender & Owner
+
+| Command | Fungsi |
+|---|---|
+| `!addsender`, `!ls` | Kelola akun penelpon tambahan (owner) |
+| `!bl`, `!clear`, `!self`, `!public`, `!setmenu`, `!ap`, `!dp`, `!uploadgh` | Blacklist, mode bot, manajemen akses |
 
 Daftar lengkap semua command: ketik `!allmenu` di WhatsApp.
 
-Fitur otomatis bawaan:
+### ⚡ Fitur Otomatis
 
-- **Auto-JPM lanjut sendiri** setelah restart kalau sebelumnya aktif.
-- **Sambutan menu personal** — `!menu` menyapa pengirim (@mention di grup, tanpa tag di PM) lengkap dengan role (Owner/Premium/User).
+Selain command manual, YuukiBot punya beberapa fitur yang jalan otomatis:
+
+| Fitur | Deskripsi |
+|---|---|
+| **Auto-JPM lanjut sendiri** | Broadcast JPM yang sedang berjalan otomatis lanjut lagi setelah bot restart |
+| **Sambutan menu personal** | `!menu` menyapa pengirim (@mention di grup, tanpa tag di PM) lengkap dengan role (Owner/Premium/User) |
+| **Moderasi grup** | Antilink / antitoxic / welcome jalan otomatis untuk semua pesan grup (lihat [Fitur Grup](#grup)) |
 
 ## Requirements
 
@@ -104,6 +200,8 @@ nano .env
 | `LOGIN_MODE` | `qr` | Metode sambung pertama: `qr` atau `pairing` |
 | `PAIRING_NUMBER` | `BOT_NUMBER` | Nomor tujuan pairing saat `LOGIN_MODE=pairing` |
 | `MTZ_API_KEY` | bawaan config | API key Alight Motion (bisa diganti kapan saja via `!amkey`) |
+| `RCH_JWT` | bawaan config | JWT reaksi channel (`!rch` / `!reactch`) — punya masa berlaku, ganti kalau kedaluwarsa |
+| `THERESAV_APIKEY` | bawaan config | API key Theresav (download YouTube: `!ytmp3`, `!ytplay`, dll) — daftar gratis di [api.theresav.biz.id](https://api.theresav.biz.id) |
 
 Catatan:
 
@@ -204,6 +302,39 @@ flowchart TD
     D --> G([Sinkronisasi state runtime ·<br/>auto-JPM scheduler jalan lagi])
 ```
 
+## ❓ FAQ / Troubleshooting
+
+### Bot tidak merespon command?
+
+1. Pastikan bot sudah connect (lihat log terminal / `!ping`).
+2. Pastikan kamu mengetik command dengan prefix yang benar (`!`), contoh `!menu`.
+3. Cek apakah nomor/grup kamu di-blacklist (`!bl`).
+4. Pastikan mode bot `public` (bukan `self`) — owner bisa cek dengan `!public`.
+
+### Bagaimana cara ganti nomor owner?
+
+Edit `.env` lalu isi `OWNER_NUMBER` dengan nomor baru (format `628xxx`, tanpa `+`/spasi/strip), lalu restart bot. Atau ubah `OwnerNumber` di `config.go` lalu build ulang.
+
+### Bagaimana cara login ulang / ganti akun WhatsApp?
+
+Hapus file `yuukibot.db`, lalu jalankan `./YuukiBot` lagi — bot akan minta scan QR / pairing baru.
+
+### Kenapa bot tidak bisa download YouTube?
+
+Pastikan `yt-dlp` terinstall (lihat [Requirements](#requirements)). Kalau tetap gagal, cek `THERESAV_APIKEY` di `.env` — bot pakai API fallback kalau yt-dlp tidak ada.
+
+### Bagaimana cara menambah sender (akun penelpon)?
+
+Jalankan `./YuukiBot --qr` atau `./YuukiBot --pairing 628xxx` untuk login akun tambahan, lalu kelola dengan `!addsender` / `!ls` (owner).
+
+### Apakah session WhatsApp aman?
+
+Ya — session tersimpan di `yuukibot.db` yang **tidak ikut di-commit** ke repo (ada di `.gitignore`). Jangan pernah membagikan file ini ke orang lain.
+
+### Command owner / premium tidak jalan?
+
+Pastikan nomor kamu terdaftar sebagai owner (`.env` `OWNER_NUMBER`) atau premium (`database/premium.json`). Beberapa fitur (call, JPM) memang khusus owner/premium.
+
 ## Kontributor
 
 Terima kasih kepada semua yang telah berkontribusi pada pengembangan YuukiBot:
@@ -231,6 +362,16 @@ In-game juga bisa lihat lewat tombol **🏆 TQTO** di menu (`!menu`) atau ketik 
 | Saluran WhatsApp | [MTCommunity](https://whatsapp.com/channel/0029Vb7tUzP9xVJiGkFNVc3q) |
 
 Ikuti saluran WhatsApp untuk update fitur terbaru, info bot, dan pengumuman lainnya.
+
+## 💖 Donasi
+
+YuukiBot dikembangkan secara gratis dan open source. Kalau bot ini bermanfaat buat kamu, kamu bisa mendukung pengembangan lewat donasi:
+
+- **QRIS** — scan QRIS yang muncul di `!donasi` di WhatsApp.
+- **Star repo** — ⭐ star repository ini sebagai bentuk dukungan moral.
+- **Kontribusi** — bantu perbaiki bug / tambah fitur lewat pull request.
+
+Setiap dukungan sangat berarti untuk menjaga bot ini tetap gratis dan terus berkembang. Terima kasih! 🙏
 
 ## Lisensi
 
