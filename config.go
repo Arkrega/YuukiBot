@@ -18,21 +18,21 @@ const (
 	// OwnerNumber dipake buat command admin-only kalau nanti mau ditambah.
 	// Format: kode negara + nomor, TANPA tanda "+", spasi, atau strip.
 	// ⚠️ GANTI dengan nomor kamu sendiri sebelum dipakai.
-	OwnerNumber = "628xxx"
+	OwnerNumber = "62882005656601"
 
 	// CreatorNumber = nomor creator/developer bot. Satu-satunya yang bisa pakai
 	// eval, shell, addowner. Sama kayak "ownerNumber" di config.json Base-Bot-Wa.
 	// ⚠️ GANTI dengan nomor kamu sendiri sebelum dipakai.
-	CreatorNumber = "628xxx"
+	CreatorNumber = "62882005656601"
 
 	// BotNumber cuma buat informasi/README. whatsmeow login pake QR code,
 	// jadi nomor ini gak dibaca langsung sama kode.
 	// ⚠️ GANTI dengan nomor bot kamu sendiri sebelum dipakai.
-	BotNumber = "628xxx"
+	BotNumber = "62882005656601"
 
 	BotName      = "Yuuki"
-	BotDeveloper = "Riflxz"
-	ChannelName  = "MTCommunity" // nama saluran WA yang ditampilkan di footer menu
+	BotDeveloper = "Arkharega"
+	ChannelName  = "Mz. Arkha" // nama saluran WA yang ditampilkan di footer menu
 
 	// MenuImageURL = URL gambar untuk header menu (canvas).
 	// Kosongkan kalau tidak mau pakai gambar.
@@ -43,7 +43,7 @@ const (
 	Prefix = "!"
 
 	// Cooldown anti-spam buat .playcall, per pengirim.
-	PlaycallCooldownSeconds = 30
+	PlaycallCooldownSeconds = 10
 
 	// TheresavAPIKey dipake buat command download video (theresav ytmp4, .playvideo).
 	// Daftar dulu buat dapetin apikey-mu sendiri di https://api.theresav.biz.id
