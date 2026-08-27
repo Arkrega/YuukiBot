@@ -1,14 +1,18 @@
 # YuukiBot
 
+<p align="center">
+  <img src="banner.jpg" alt="YuukiBot Banner" width="100%">
+</p>
+
 Bot WhatsApp multi-fitur berbasis Go ([whatsmeow](https://github.com/tulir/whatsmeow)): pencarian media, konversi file, edit gambar/video, sticker AI, AI chat, broadcast JPM, tools, hingga panggilan audio/video dengan multi-sender. Dijalankan sebagai binary tunggal — semua aset (termasuk QRIS donasi) sudah ter-embed di dalamnya.
 
-> **Closed source.** Repo ini hanya berisi binary hasil compile dan dokumentasi. Source code tidak disertakan.
+> **Open source.** Source code tersedia di GitHub. Kalau kamu memakai / mengembangkan bot ini, mohon hormati pembuat: jangan hapus kredit developer, jangan klaim sebagai buatanmu, dan kalau mau mengembangkan silakan **fork** repository asli. Jangan lupa ⭐ **star** sebagai bentuk dukungan. 🙏
 
 ## Fitur Utama
 
 | Kategori | Contoh Command | Fungsi |
 |---|---|---|
-| Umum | `!menu`, `!ping`, `!info`, `!sticker`, `!donasi`, `!contributor` | Navigasi menu (4 versi tampilan), cek status, buat sticker, QRIS donasi, daftar kontributor |
+| Umum | `!menu`, `!ping`, `!info`, `!sticker`, `!donasi`, `!contributor`, `!afk` | Navigasi menu (4 versi tampilan), cek status, buat sticker, QRIS donasi, daftar kontributor, tandai sedang AFK (mention kamu akan diberi tahu) |
 | AI Chat | `!ai`, `yuuki <pertanyaan>` | AI chat Yuuki: `!ai on/off` (owner), semua user ngobrol via `yuuki`/`yuki`, session per user (`!ai list`/`load`/`new`) |
 | Search | `!yts`, `!wiki`, `!kbbi`, `!lyrics`, `!pinterest`, `!bingimage` | Cari video, artikel, definisi, lirik, gambar |
 | Tools | `!tr`, `!qr`, `!ss`, `!barcode`, `!tempmail`, `!whatmusic`, `!ipinfo` | Translate, QR/barcode, screenshot web, identifikasi lagu, lookup IP |
@@ -20,6 +24,7 @@ Bot WhatsApp multi-fitur berbasis Go ([whatsmeow](https://github.com/tulir/whats
 | JPM Broadcast | `!jpm`, `!jpmht`, `!jpmch`, `!autojpm`, `!stopjpm`, `!bljpm` | Broadcast ke semua grup/saluran (owner): mode basic/hidetag/channel/update/auto, jeda antar grup, blacklist per fitur, auto-broadcast terjadwal |
 | Saluran | `!getidch`, `!upch`, `!kirim` | Ambil ID saluran dari link (semua user), posting & kirim konten saluran |
 | Alight Motion | `!am-send`, `!am-aktif`, `!amkey` | Aktivasi akun via magic link; key kedaluwarsa -> diarahkan beli (10k/bln), ganti key sendiri via `!amkey <apikey>` tanpa restart |
+| Fun | `!scanrepo`, `!githubstalk`, `!npmstalk`, `!tiktokstalk`, `!robloxstalk`, `!jodoh`, `!howgay` | Scan repo GitHub untuk security risk, stalk akun, cek kecocokan, dll |
 | Audio/Call | `!play`, `!skip`, `!stopcall`, `!antrian`, `!prank` | Streaming lagu/video ke panggilan (owner/premium) |
 | Sender | `!addsender`, `!ls` | Kelola akun penelpon tambahan (owner) |
 | Owner | `!bl`, `!clear`, `!self`, `!public`, `!setmenu`, `!ap`, `!dp`, `!uploadgh` | Blacklist, mode bot, manajemen akses |
@@ -35,7 +40,7 @@ Fitur otomatis bawaan:
 
 | Kebutuhan | Versi | Fungsi |
 |---|---|---|
-| Binary `YuukiBot` | - | Bot itu sendiri (tidak butuh runtime Go) |
+| Binary `YuukiBot` | - | Bot itu sendiri (tidak butuh runtime Go) — atau build dari source |
 | ffmpeg + ffprobe | terbaru | Proses video/audio: `!hdvid`, `!tomp3`, kompres, dll |
 | ImageMagick (`magick`) | terbaru | Proses gambar: `!hd`, `!blur`, efek |
 | yt-dlp | opsional | Download YouTube (`!play`, `!tt`). Tanpa ini bot pakai API fallback |
@@ -59,6 +64,28 @@ sudo chmod +x /usr/local/bin/yt-dlp
 sudo apt install -y golang-go
 # atau unduh dari https://go.dev/dl — butuh Go 1.25+
 ```
+
+## Instalasi dari Source (Open Source)
+
+Karena YuukiBot sekarang **open source**, kamu bisa build binary sendiri dari source. Repo sudah termasuk `vendor/`, jadi tidak perlu internet saat build.
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Riflxz/YuukiBot.git
+cd YuukiBot
+
+# 2. Build binary (pakai vendor, tanpa download dependency)
+go build -mod=vendor -o YuukiBot .
+
+# 3. (Opsional) salin contoh konfigurasi & sesuaikan nomor kamu
+cp .env.example .env
+nano .env
+
+# 4. Jalankan
+./YuukiBot
+```
+
+> **Catatan:** Sebelum dipakai, jangan lupa ganti `OwnerNumber` / `CreatorNumber` / `BotNumber` di `config.go` (atau lewat `.env`) dengan nomor kamu sendiri — nilai default di source sudah di-set ke placeholder `628xxx`.
 
 ## Konfigurasi (.env)
 
@@ -174,7 +201,7 @@ flowchart TD
     F2 -- pairing --> P
     Q --> D
     P --> D
-    D --> G([Auto-follow channel ·<br/>auto-JPM scheduler jalan lagi])
+    D --> G([Sinkronisasi state runtime ·<br/>auto-JPM scheduler jalan lagi])
 ```
 
 ## Kontributor
@@ -192,11 +219,24 @@ In-game juga bisa lihat lewat tombol **🏆 TQTO** di menu (`!menu`) atau ketik 
 
 ## Developer
 
+<p align="center">
+  <img src="logo.jpg" alt="YuukiBot Logo" width="150">
+</p>
+
 | | |
 |---|---|
 | Developer | **RIflxz** |
 | GitHub | [github.com/Riflxz](https://github.com/Riflxz) |
+| Linktree | [lynk.id/riflx](https://lynk.id/riflx) |
+| Saluran WhatsApp | [MTCommunity](https://whatsapp.com/channel/0029Vb7tUzP9xVJiGkFNVc3q) |
+
+Ikuti saluran WhatsApp untuk update fitur terbaru, info bot, dan pengumuman lainnya.
 
 ## Lisensi
 
-Closed source. Hak cipta milik pemilik bot. Tidak boleh didistribusikan ulang atau dimodifikasi tanpa izin tertulis.
+Open source. Hak cipta milik developer asli. Kamu bebas memakai, memodifikasi, dan mengembangkan bot ini, dengan syarat:
+
+- **Jangan hapus kredit developer** / nama pembuat di source.
+- **Jangan klaim bot ini sebagai buatanmu sendiri.**
+- Kalau mau mengembangkan, **fork** repository asli (jangan salin mentah-mentah).
+- **Star** repository asli sebagai bentuk dukungan & apresiasi. 🙏
