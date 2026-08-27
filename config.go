@@ -40,7 +40,7 @@ const (
 	MenuImageURL = "https://imagetourl.cloud/ducct8r2.png"
 
 	// Prefix command, misal "!" -> !menu, !play
-	Prefix = "!"
+	Prefix = "."
 
 	// Cooldown anti-spam buat .playcall, per pengirim.
 	PlaycallCooldownSeconds = 10
